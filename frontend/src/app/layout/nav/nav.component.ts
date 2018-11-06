@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nav',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+  public constructor(private titleTagService: Title ) { }
+
+  public setTitle( pageTitle: string) {
+    this.titleTagService.setTitle( pageTitle );
+  }
 
   ngOnInit() {
   }
