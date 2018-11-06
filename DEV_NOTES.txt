@@ -326,8 +326,11 @@ $  git push --set-upstream origin back/ch06
 
 ##################################################################################
 
-CHAPTER 07 
+CHAPTER 07 - 1h 46 min
 
-Frontend CH07 - Progressive Web Applications with the Angular CLI
+Frontend CH07 - Progressive Web Applications with the Angular CLI 
 
 git commit -m'FRONTEND: Added Progressive Web App - PWA/ App Structures Modules/components'
+
+
+######################################################################
