@@ -291,4 +291,23 @@ FINISHED CHAPTER 05
 CH06 - Creating a RESTful API Using Laravel - Part 2
 
 
- 
+         modified:   DEV_NOTES.txt
+        modified:   backend/app/Exceptions/Handler.php
+        new file:   backend/app/Http/Controllers/API/AuthController.php
+        modified:   backend/app/Http/Controllers/API/BikeController.php
+        modified:   backend/app/Http/Controllers/API/BuilderController.php
+        modified:   backend/app/Http/Controllers/API/RatingController.php
+        new file:   backend/app/Http/Resources/BikesResource.php
+        new file:   backend/app/Http/Resources/BuildersResource.php
+        new file:   backend/app/Http/Resources/ItemsResource.php
+        new file:   backend/app/Http/Resources/RatingResource.php
+        modified:   backend/composer.json
+        modified:   backend/composer.lock
+        modified:   backend/config/app.php
+        modified:   backend/config/auth.php
+        new file:   backend/config/jwt.php
+        modified:   backend/routes/api.php
+
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack/EB_Hands_Full_Stack (back/ch06)
+$ git commit -m'Added JWT/Auth/ Resources | Updated Api.php Handler.php/Controllers/Dev notes'
