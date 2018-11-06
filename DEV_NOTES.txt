@@ -282,7 +282,9 @@ CHAPTER 05  - BACKEND
 
  Committed : Added Models and Migration files.  
 
+FINISHED CHAPTER 05
 
+################################################################33
 
  
 
