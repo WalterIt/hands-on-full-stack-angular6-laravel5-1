@@ -323,3 +323,11 @@ $  git push --set-upstream origin back/ch05
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack/EB_Hands_Full_Stack (back/ch05)
 $  git push --set-upstream origin back/ch06
+
+##################################################################################
+
+CHAPTER 07 
+
+Frontend CH07 - Progressive Web Applications with the Angular CLI
+
+git commit -m'FRONTEND: Added Progressive Web App - PWA/ App Structures Modules/components'
