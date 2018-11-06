@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BikesGaragesTableSeeder extends Seeder
+class BikeGarageTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
