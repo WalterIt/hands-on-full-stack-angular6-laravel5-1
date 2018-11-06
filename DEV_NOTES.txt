@@ -1,0 +1,290 @@
+
+
+##################################################################################################
+
+1 - Clone Laradock inside your PHP project:
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack
+$ git clone https://github.com/WalterIt/my-laradock.git
+
+2 - SET UP  .ENV FILE
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack/laradock (master)
+$ git remote add origin https://github.com/WalterIt/my-laradock.git
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack/laradock (master)
+$ git push -u origin master
+
+
+3 - Run your containers:
+
+docker-compose up -d nginx mysql phpmyadmin workspace 
+
+login in PhpMyAdmin: 
+server: mysql 
+login: root 
+password: root
+
+TESTED PhpMyAdmin -> OK
+
+
+4 - docker-compose up -d nginx mysql phpmyadmin workspace 
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack/laradock (master)
+$ docker-compose exec workspace bash
+
+5 - Made new directory in root:
+root@cb730a746c82:/var/www# mkdir EB_Hands_Full_Stack
+
+6 - 
+composer create-project laravel/laravel backend
+
+7 - TEST
+
+
+Users/wshir/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack
+
+
+--------------------------------------------------------------------------------
+#Creating models
+Let's get hands on:
+Open your Terminal window inside the chapter-01 folder, and type the following command:
+
+php artisan make:model Band
+
+After the command, you should see a success message in green, stating: Model created successfully.
+
+#Creating controllers
+Now it is time to use the artisan to generate our controller, let's see how we can do that:
+Go back to the Terminal window, and type the following command:
+
+php artisan make:controller BandController 
+
+
+#Creating views
+As we can see earlier when using the php artisan list command,  we do not have any alias command to create the application views automatically. So we need to create the views manually:
+Go back to your text editor, and inside the resources/views folder, create a new file, named band.blade.php.
+Place the following code inside the band.blade.php file:
+
+<div class="container">
+    <div class="content">
+        <div class="title">Hi i'm a view</div>
+    </div>
+</div>
+
+
+#Creating routes
+
+Now, let's create our first route:
+On your text editor, open web.php inside the routes folder, and add the following code, right after the welcome view:
+
+Route::get('/band', function () {
+ return view('band');
+ });
+
+
+#Connecting with a database
+
+#Setting up the database inside a Docker container
+It's now time to configure our database. If you use Homestead, you probably have your database connection configured and working well. To check, open your Terminal and type the following command:
+
+php artisan tinker
+
+DB::connection()->getPdo();
+
+
+1 - Inside of the root project, open the .env file and look at line 8 (the database connection), which looks as follows:
+ DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=homestead
+ DB_USERNAME=homestead
+ DB_PASSWORD=secret
+
+2 - Now, replace the preceding code with the following lines:
+ DB_CONNECTION=mysql
+ DB_HOST=mysql
+ DB_PORT=3306
+ DB_DATABASE=laravel-angular-book
+ DB_USERNAME=root
+ DB_PASSWORD=root
+
+3 -Env of Laradock -  Copy the environment variables from the MySQL container setup:
+mysql:
+  image: mysql:8.0
+  entrypoint: ['/entrypoint.sh', '--character-set-server=utf8', '--
+  collation-server=utf8_general_ci']
+  container_name: larahell-mysql
+  working_dir: /application
+  volumes:
+    - .:/application
+  environment:
+    - MYSQL_ROOT_PASSWORD=larahell
+    - MYSQL_DATABASE=larahell-angular-book
+    - MYSQL_USER=larahell-user
+    - MYSQL_PASSWORD=123456
+  ports:
+    - "8083:3306"
+
+
+4 - In your Terminal window, type the following command:
+
+docker-compose exec workspace bash
+
+Finally, let's check our connection; type the following command:
+
+php artisan tinker
+
+DB::connection()->getPdo();
+
+
+-----------------------------------------------------------------
+
+# Creating a migrations file and database seed
+
+- Migration files are very common in some MVC frameworks, such as Rails, Django, and, of course, Laravel. It is through this type of file that we can keep our database consistent with our application, since we cannot versioning the database schemes . Migration files help us to store each change in our database, so that we can version these files and keep the project consistent.
+
+- Database seeds serve to populate the tables of a database with an initial batch of records; this is extremely useful when we are developing web applications from the beginning. The data of the initial load can be varied, from tables of users to administration objects such as passwords and tokens, and everything else that we require.
+
+Let's look at how we can create a migration file for the Bands model in Laravel:
+
+1 Open your Terminal window and type the following command:
+
+php artisan make:migration create_bands_table
+
+2 Open the database/migrations folder, and you will see a file called<timestamp>create_bands_table.php.
+
+3 Open this file and paste the following code inside public function up():
+
+Schema::create('bands', function (Blueprint $table) {
+   $table->increments('id');
+   $table->string('name');
+   $table->string('description');
+   $table->timestamps();
+});
+
+6 Paste the following code inside public function down():
+
+Schema::dropIfExists('bands');
+
+
+7 Inside of the database/factories folder, open the ModalFactory.php file and add the following code, right after the User Factory. Note that we are using a PHP library called faker inside a factory function, in order to generate some data:
+
+$factory->define(App\Band::class, function (Faker\Generator $faker) {
+return [
+ 'name' => $faker->word,
+ 'description' => $faker->sentence
+ ];
+ });
+
+8 Go back to your Terminal window and create a database seed. To do this, type the following command:
+
+php artisan make:seeder BandsTableSeeder
+
+9 In the database/seeds folder, open the BandsTableSeeder.php file and type the following code, inside public function run():
+
+factory(App\Band::class,5)->create()->each(function ($p) {
+ $p->save();
+ });
+
+10 Now, in the database/seeds folder, open the DatabaseSeeder.php file and add the following code, inside public function run():
+
+$this->call(BandsTableSeeder::class);
+
+You can read more about Faker PHP at https://github.com/fzaninotto/Faker.
+
+
+Before we go any further , we need to do a small refactoring on the Band model.
+
+10 Inside of the app root, open the Band.php file and add the following code, inside the Band class:
+
+protected $fillable = ['name','description'];
+
+11 Go back to your Terminal and type the following command:
+
+php artisan migrate
+
+After the command, you will see the following message in the Terminal window: 
+ Migration table created successfully.
+
+The preceding command was just to populate the database with our seed.
+12 Go back to your Terminal and type the following command:
+
+php artisan db:seed
+
+We now have five items ready to use in our database.
+Let's check whether everything will go smoothly.
+
+13 Inside of your Terminal, to exit php-fpm container, type the following command:
+
+exit
+
+14 Now, in the application root folder, type the following command in your Terminal:
+
+docker-compose exec mysql mysql -ularavel-angular-book -p123456
+
+The preceding command will give you access to the MySQL console inside mysql Docker container, almost exactly the same as how we gained access to php-fpm container.
+
+15 Inside of the Terminal, type the following command to see all of the databases:
+
+show databases;
+
+As you can see, we have two tables: information_schema and laravel-angular-book.
+
+16 Let's access the laravel-angular-book table; type the following command:
+
+use laravel-angular-book;
+
+17 And now, let's check our tables, as follows:
+
+show tables;
+
+18 Now, let's SELECT all records from the bands tables:
+
+SELECT * from bands;
+
+We will see something similar to the following screenshot:
+
+Database bands table
+
+Now, exit the MySQL console with the following command:
+
+exit
+
+
+################################################################################################
+
+
+CHAPTER 04
+CH04 Building the Baseline Backend Application  - 46 min
+See Notes on OneNotes
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/EB_Hands_On_Full_Stack (back/ch04)
+$ git commit -m'Created migration bike_table/Bikes Seeder from bikes.json | Updated DatabaseSeeder'
+
+
+
+Installing the L5-Swagger library (!! --  NOT WORKING!! --  !!)
+
+Creating the application API controller
+
+Generating and publishing the API documentation
+
+
+################################################################################################
+
+CHAPTER 05
+
+ Creating a RESTful API Using Laravel - Part 1
+
+  Preparing the application and understanding what we are building
+  What we are building
+
+ Committed : Added Models and Migration files.  
+
+
+
+ 
+
+
+
