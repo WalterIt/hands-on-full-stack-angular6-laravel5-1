@@ -10,7 +10,7 @@ use App\Http\Resources\BikesResource;
 
 class BikeController extends Controller
 {
-
+    
     /**
      * Protect update and delete methods, only for authenticated users.
      *
@@ -149,7 +149,7 @@ class BikeController extends Controller
      *          description="Not Found"
      *     ),
      *     @SWG\Response(
-	 * 			response="405",
+	 * 			response="405", 
 	 * 			description="Invalid HTTP Method"
 	 *     ),
      *     security={

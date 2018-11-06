@@ -19,7 +19,7 @@ class RatingController extends Controller
     {
       $this->middleware('auth:api');
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *

@@ -286,7 +286,9 @@ FINISHED CHAPTER 05
 
 ################################################################33
 
+ CHAPTER 06
  
+CH06 - Creating a RESTful API Using Laravel - Part 2
 
 
-
+ 
