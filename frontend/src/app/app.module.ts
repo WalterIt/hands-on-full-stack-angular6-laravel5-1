@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Application modules
 import { HomeModule } from './pages/home/home.module';
@@ -31,7 +32,8 @@ import { HttpErrorHandler } from './pages/shared/_services/http-handle-error.ser
     BikesModule,
     BuildersModule,
     AuthModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    NgbModule.forRoot()
   ],
   providers: [
     Title,

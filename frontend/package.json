@@ -22,9 +22,12 @@
     "@angular/pwa": "^0.10.4",
     "@angular/router": "^6.1.0",
     "@angular/service-worker": "^6.1.0",
+    "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "core-js": "^2.5.4",
     "rxjs": "~6.2.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "@ng-bootstrap/ng-bootstrap": "^2.0.0-alpha.0",
+    "bootstrap": "^4.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",

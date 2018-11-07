@@ -363,3 +363,4 @@ CHAPTER 09 (2h 20 min)
  git checkout -b front/ch10-Bootstrap-Pipes
 
 
+  git commit -m'Added Bootstrap | Updated Views'
