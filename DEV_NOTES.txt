@@ -360,4 +360,6 @@ CHAPTER 09 (2h 20 min)
 
  CH10 - Frontend Views with Bootstrap 4 and NgBootstrap
 
+ git checkout -b front/ch10-Bootstrap-Pipes
+
 
