@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +15,9 @@ import { BuildersModule } from './pages/builders/builders.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { NavComponent } from './layout/nav/nav.component';
 
+import { AppHttpInterceptorService } from './shared/_services/app-http-interceptor.service';
+import { HttpErrorHandler } from './pages/shared/_services/http-handle-error.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +26,7 @@ import { NavComponent } from './layout/nav/nav.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     HomeModule,
     BikesModule,
     BuildersModule,
@@ -28,7 +34,13 @@ import { NavComponent } from './layout/nav/nav.component';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    Title
+    Title,
+    HttpErrorHandler,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptorService ,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
